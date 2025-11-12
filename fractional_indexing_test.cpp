@@ -136,3 +136,26 @@ TEST(FractionalIndexingTest, RandomTest) {
     }
   }
 }
+
+TEST(FractionalIndexingTest, RandomTestEmptyStr) {
+  const uint64_t run_s = 60;
+
+  uint64_t time_s = time(0);
+  while (true) {
+    for (int i = 0; i < 1000; i++) {
+      std::string key = generateRandomKey();
+      std::string result;
+      if (i & 1) {
+        result = generateKeyBetween("", key);
+        ASSERT_LT(result, key);
+      } else {
+        result = generateKeyBetween(key, "");
+        ASSERT_GT(result, key);
+      }
+    }
+
+    if (time(0) - time_s > run_s) {
+      break;
+    }
+  }
+}
