@@ -152,6 +152,9 @@ TEST(FractionalIndexingTest, RandomTestEmptyStr) {
         result = generateKeyBetween(key, "");
         ASSERT_GT(result, key);
       }
+
+      ASSERT_TRUE(result.back() != base::KBase62Digits[0])
+          << "key: " << key << ", result: " << result;
     }
 
     if (time(0) - time_s > run_s) {
@@ -159,3 +162,6 @@ TEST(FractionalIndexingTest, RandomTestEmptyStr) {
     }
   }
 }
+
+// I have already conducted more comparative testing locally with
+// rocicorp/fractional-indexing

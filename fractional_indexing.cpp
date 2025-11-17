@@ -44,12 +44,18 @@ inline std::string midpoint(const std::string& a, const std::string& b) {
     // go.  note that we don't need to pad `b`, because it can't
     // end before `a` while traversing the common prefix.
     int n = 0;
-    while (n < a.length() && n < b.length() && a[n] == b[n]) {
+    char zero = KBase62Digits[0];
+    while (n < static_cast<int>(b.length())) {
+      char a_char = (n < static_cast<int>(a.length())) ? a[n] : zero;
+      if (a_char != b[n]) {
+        break;
+      }
       n++;
     }
 
     if (n > 0) {
-      return b.substr(0, n) + midpoint(a.substr(n), b.substr(n));
+      return b.substr(0, n) +
+             midpoint(a.size() > n ? a.substr(n) : "", b.substr(n));
     }
   }
 
